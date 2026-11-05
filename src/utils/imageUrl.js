@@ -20,7 +20,10 @@ export const normalizeImageUrl = (url) => {
 
   if (url.startsWith('/uploads/') || url.startsWith('/api/uploads/')) {
     const backendBaseUrl = getBackendBaseUrl();
-    return `${backendBaseUrl}${url.startsWith('/') ? url : `/${url}`}`;
+    const normalizedPath = url.startsWith('/uploads/')
+      ? `/api/uploads/${url.slice('/uploads/'.length)}`
+      : url;
+    return `${backendBaseUrl}${normalizedPath.startsWith('/') ? normalizedPath : `/${normalizedPath}`}`;
   }
 
   return url;
